@@ -2,7 +2,7 @@ pipeline {
     agent { label 'JDK' }
     triggers { pollSCM('* * * * *') }
     tools {
-        maven 'Maven'
+        maven 'MAVEN'
         }
     stages {
         stage('vcs') {
