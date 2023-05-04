@@ -242,6 +242,16 @@
         <enabled>false</enabled>
       </snapshots>
     </repository>
+    <repository>
+  <id>Tsar</id>
+  <url>https://pkgs.dev.azure.com/TSAR6/Az/_packaging/Tsar/maven/v1</url>
+  <releases>
+    <enabled>true</enabled>
+  </releases>
+  <snapshots>
+    <enabled>true</enabled>
+  </snapshots>
+</repository>
   </repositories>
 
   <pluginRepositories>
@@ -384,13 +394,3 @@
   </profiles>
 
 </project>
-<repository>
-  <id>Tsar</id>
-  <url>https://pkgs.dev.azure.com/TSAR6/Az/_packaging/Tsar/maven/v1</url>
-  <releases>
-    <enabled>true</enabled>
-  </releases>
-  <snapshots>
-    <enabled>true</enabled>
-  </snapshots>
-</repository>
