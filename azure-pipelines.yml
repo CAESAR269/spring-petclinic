@@ -1,38 +1,32 @@
 ---
 trigger:
   - main
-variables:
-  goals: package
-parameters:
-  - name: mavenGoal
-    displayName: Maven Goal
-    type: string
-    default: package
-    values:
-      - package
-      - clean package
-      - clean install
-      - install
+steps:
+- task: Maven@4
+  inputs:
+    mavenPomFile: 'pom.xml'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.17'
+    mavenVersionOption: 'Default'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
+    sonarQubeRunAnalysis: false
 
-jobs:
-  - job: buildjob
-    displayName: Build and Package Game of life
-    pool: 
-      vmImage: ubuntu-22.04
-    steps:
-      - task: Maven@3
-        inputs:
-          mavenPOMFile: 'pom.xml'
-          goals: ${{ parameters.mavenGoal }}
-          publishJUnitResults: true
-          testResultsFiles: '**/surefire-reports/TEST-*.xml'
-          javaHomeOption: 'JDKVersion'
-          jdkVersionOption: '1.17'
-      - task: CopyFiles@2
-        inputs:
-          Contents: "**/target/*.war"
-          TargetFolder: $(Build.ArtifactStagingDirectory)
-      - task: PublishBuildArtifacts@1
-        inputs:
-          pathToPublish: $(Build.ArtifactStagingDirectory)
-          artifactName: SPC
+- task: SonarQubePrepare@5
+  inputs:
+    SonarQube: 'Sonarqube'
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: 'DevSecOps_DevSecOps_AYzZ-T_ULLc6J7PQBr-s'
+    cliProjectName: 'spc'
+    cliSources: '.'
+
+- task: SonarQubeAnalyze@5
+  inputs:
+    jdkversion: 'JAVA_HOME_17_X64'
+
+- task: SonarQubePublish@5
+  inputs:
+    pollingTimeoutSec: '300'
