@@ -1,29 +1,13 @@
----
 trigger:
   - main
+
+pool:
+  vmImage: ubuntu-latest
+
 steps:
 
-- task: SonarQubePrepare@5
+- task: Bash@3
   inputs:
-    SonarQube: 'Sonarqube'
-    scannerMode: 'CLI'
-    configMode: 'manual'
-    cliProjectKey: 'DevSecOps_DevSecOps_AYzZ-T_ULLc6J7PQBr-s'
-    cliProjectName: 'spc'
-    cliSources: '.'
-
-- task: Maven@4
-  inputs:
-    mavenPomFile: 'pom.xml'
-    goals: 'install sonar:sonar'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.17'
-    mavenVersionOption: 'Default'
-    mavenAuthenticateFeed: false
-    effectivePomSkip: false
-
-- task: SonarQubePublish@5
-  inputs:
-    pollingTimeoutSec: '300'
+    targetType: 'inline'
+    script: 'mvn package'
+    workingDirectory: '.'
