@@ -10,4 +10,3 @@ steps:
     targetType: 'inline'
     script: |
       mvn clean package -Dskiptests
-    workingDirectory: './'
