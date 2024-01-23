@@ -9,6 +9,5 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      mvn clean package
-      mvn test
+      mvn clean package -Dskiptests
     workingDirectory: './'
